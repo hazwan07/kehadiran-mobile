@@ -1,0 +1,62 @@
+{
+  "expo": {
+    "name": "Kehadiran Pekerja",
+    "slug": "kehadiran-pekerja",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "kehadiran",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.syarikat.kehadiran",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Aplikasi ini memerlukan akses lokasi untuk merekod kehadiran anda di tapak projek.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Akses lokasi latar belakang diperlukan untuk memantau kehadiran anda semasa shift aktif.",
+        "NSCameraUsageDescription": "Kamera diperlukan untuk mengesahkan identiti anda semasa clock-in.",
+        "NSFaceIDUsageDescription": "Face ID digunakan untuk pengesahan tambahan."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f172a"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.syarikat.kehadiran",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Aplikasi ini memerlukan akses lokasi untuk merekod kehadiran anda."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Kamera diperlukan untuk pengesahan identiti semasa clock-in."
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,132 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ==================== Helper Functions ====================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user owns the resource (by employeeId)
+    function isOwner(employeeId) {
+      return isAuthenticated() && request.auth.uid == employeeId;
+    }
+    
+    // Check if request is from admin
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['admin', 'super_admin'];
+    }
+    
+    // Check if request is from service account (backend)
+    function isServiceAccount() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // ==================== employees ====================
+    match /employees/{employeeId} {
+      // Read: Authenticated user, own record sahaja
+      allow read: if isOwner(employeeId);
+      
+      // Write: Service account (backend) sahaja
+      allow create, update: if isServiceAccount();
+      
+      // Delete: DENIED untuk semua
+      allow delete: if false;
+    }
+    
+    // ==================== devices ====================
+    match /devices/{deviceUUID} {
+      // Read: Service account sahaja
+      // ⚠️ deviceSecret ada dalam doc ini — JANGAN expose ke client
+      allow read: if isServiceAccount();
+      
+      // Write: Service account sahaja
+      allow create, update: if isServiceAccount();
+      
+      // Delete: DENIED
+      allow delete: if false;
+    }
+    
+    // ==================== project_sites ====================
+    match /project_sites/{siteId} {
+      // Read: Any authenticated user (untuk geofence check)
+      allow read: if isAuthenticated();
+      
+      // Write: Admin sahaja
+      allow create, update: if isAdmin();
+      
+      // Delete: DENIED
+      allow delete: if false;
+    }
+    
+    // ==================== attendance_records ====================
+    // ⚠️ FIRESTORE RULES: NO UPDATE, NO DELETE
+    match /attendance_records/{attendanceId} {
+      // Create: Authenticated user, own employeeId sahaja
+      // Note: In production, attendance should only be created through backend
+      allow create: if isAuthenticated() && 
+        request.resource.data.employeeId == request.auth.uid;
+      
+      // Read: Authenticated user, own records sahaja
+      allow read: if isAuthenticated() && 
+        resource.data.employeeId == request.auth.uid;
+      
+      // ⚠️ Update: DENIED untuk semua (termasuk admin)
+      // Admin perlu guna Cloud Function untuk tambah reviewNote
+      allow update: if false;
+      
+      // ⚠️ Delete: DENIED untuk semua
+      allow delete: if false;
+    }
+    
+    // ==================== audit_log ====================
+    // IMMUTABLE — tiada update, tiada delete
+    match /audit_log/{logId} {
+      // Create: Service account (backend) sahaja
+      // ⚠️ DENIED untuk semua clients
+      allow create: if isServiceAccount();
+      
+      // Read: Admin role sahaja
+      allow read: if isAdmin();
+      
+      // ⚠️ Update: DENIED
+      allow update: if false;
+      
+      // ⚠️ Delete: DENIED
+      allow delete: if false;
+    }
+    
+    // ==================== security_events ====================
+    match /security_events/{eventId} {
+      // Create: Authenticated user (dari app)
+      allow create: if isAuthenticated();
+      
+      // Read: Admin sahaja
+      allow read: if isAdmin();
+      
+      // Update/Delete: Admin sahaja (untuk resolve events)
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+    
+    // ==================== nonce_store ====================
+    match /nonce_store/{nonceId} {
+      // Only service account
+      allow read, write: if isServiceAccount();
+    }
+    
+    // ==================== admins ====================
+    match /admins/{adminId} {
+      allow read: if isAuthenticated() && request.auth.uid == adminId;
+      allow write: if false; // Managed via Firebase Console only
+    }
+    
+    // ==================== DEFAULT: DENY ALL ====================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
