@@ -6,8 +6,8 @@
  */
 
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { ENV_CONFIG } from '@constants/config';
-import { ApiResponse } from '@types/index';
+import { ENV_CONFIG } from '../constants/config';
+import { ApiResponse } from '../types/index';
 
 // Axios instance dengan base config
 const apiClient = axios.create({

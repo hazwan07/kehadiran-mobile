@@ -5,7 +5,7 @@
  */
 
 import { create } from 'zustand';
-import type { AttendanceRecord, VerifiedLocation } from '@types/index';
+import type { AttendanceRecord, VerifiedLocation } from '../types/index';
 
 type LocationStatus = 'CHECKING' | 'IN_ZONE' | 'NEAR_ZONE' | 'OUT_ZONE' | 'ERROR';
 

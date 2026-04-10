@@ -7,9 +7,9 @@
 
 import { create } from 'zustand';
 import * as SecureStore from 'expo-secure-store';
-import apiClient, { getApiErrorMessage, initApiService } from '@services/api.service';
-import { STORE_KEYS } from '@constants/config';
-import type { Employee, LoginResponse, AuthState } from '@types/index';
+import apiClient, { getApiErrorMessage, initApiService } from '../services/api.service';
+import { STORE_KEYS } from '../constants/config';
+import type { Employee, LoginResponse, AuthState } from '../types/index';
 
 interface AuthActions {
   /** Login menggunakan Employee ID dan PIN */

@@ -8,9 +8,9 @@
 
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
-import { hashImageData } from '@utils/crypto.utils';
-import { APP_CONFIG } from '@constants/config';
-import type { VerifiedLocation } from '@types/index';
+import { hashImageData } from '../utils/crypto.utils';
+import { APP_CONFIG } from '../constants/config';
+import type { VerifiedLocation } from '../types/index';
 
 /**
  * Watermark an image with attendance metadata.

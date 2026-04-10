@@ -9,7 +9,7 @@
 
 import * as Location from 'expo-location';
 import { Linking, Platform } from 'react-native';
-import { GPS_CONFIG } from '@constants/config';
+import { GPS_CONFIG } from '../constants/config';
 import type {
   VerifiedLocation,
   LocationError,
@@ -17,7 +17,7 @@ import type {
   Coords,
   GeofenceResult,
   ImpossibleTravelResult,
-} from '@types/index';
+} from '../types/index';
 
 // ==================== 1. Permission Management ====================
 

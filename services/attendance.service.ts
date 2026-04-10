@@ -8,16 +8,16 @@
  */
 
 import apiClient, { getApiErrorMessage } from './api.service';
-import { generateNonce, signPayload } from '@utils/crypto.utils';
+import { generateNonce, signPayload } from '../utils/crypto.utils';
 import { getOrCreateDeviceUUID } from './device.service';
-import { APP_CONFIG, STORE_KEYS } from '@constants/config';
+import { APP_CONFIG, STORE_KEYS } from '../constants/config';
 import * as SecureStore from 'expo-secure-store';
 import type {
   AttendancePayload,
   AttendanceRecord,
   VerifiedLocation,
   ApiResponse,
-} from '@types/index';
+} from '../types/index';
 
 /**
  * Build the full attendance payload from capture data.

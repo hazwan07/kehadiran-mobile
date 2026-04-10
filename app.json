@@ -34,7 +34,11 @@
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_BACKGROUND_LOCATION",
-        "CAMERA"
+        "CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -57,6 +61,12 @@
           "cameraPermission": "Kamera diperlukan untuk pengesahan identiti semasa clock-in."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b2fff7c9-6189-471b-9920-d5dbdaea99d3"
+      }
+    }
   }
 }

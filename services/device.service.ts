@@ -12,8 +12,8 @@ import * as Crypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
-import { STORE_KEYS, EMULATOR_STRINGS } from '@constants/config';
-import type { DeviceIntegrity, DeviceInfo } from '@types/index';
+import { STORE_KEYS, EMULATOR_STRINGS } from '../constants/config';
+import type { DeviceIntegrity, DeviceInfo } from '../types/index';
 import apiClient from './api.service';
 
 // ==================== BAHAGIAN A — Device UUID ====================
